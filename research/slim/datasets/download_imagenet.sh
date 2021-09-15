@@ -49,29 +49,30 @@ mkdir -p "${BBOX_DIR}"
 cd "${OUTDIR}"
 
 # Download and process all of the ImageNet bounding boxes.
-BASE_URL="http://www.image-net.org/challenges/LSVRC/2012/nnoupb"
+BASE_URL="http://www.image-net.org/challenges/LSVRC/2012/dd31405981ef5f776aa17412e1f0c112"
 
 # See here for details: http://www.image-net.org/download-bboxes
 BOUNDING_BOX_ANNOTATIONS="${BASE_URL}/ILSVRC2012_bbox_train_v2.tar.gz"
 BBOX_TAR_BALL="${BBOX_DIR}/annotations.tar.gz"
-echo "Downloading bounding box annotations."
-wget "${BOUNDING_BOX_ANNOTATIONS}" -O "${BBOX_TAR_BALL}"
-echo "Uncompressing bounding box annotations ..."
-tar xzf "${BBOX_TAR_BALL}" -C "${BBOX_DIR}"
+#echo "Downloading bounding box annotations."
+#wget "${BOUNDING_BOX_ANNOTATIONS}" -O "${BBOX_TAR_BALL}"
+#echo "Uncompressing bounding box annotations ..."
+#tar xzf "${BBOX_TAR_BALL}" -C "${BBOX_DIR}"
 
 LABELS_ANNOTATED="${BBOX_DIR}/*"
 NUM_XML=$(ls -1 ${LABELS_ANNOTATED} | wc -l)
 echo "Identified ${NUM_XML} bounding box annotations."
 
 # Download and uncompress all images from the ImageNet 2012 validation dataset.
-VALIDATION_TARBALL="ILSVRC2012_img_val.tar"
-OUTPUT_PATH="${OUTDIR}validation/"
-mkdir -p "${OUTPUT_PATH}"
-cd "${OUTDIR}/.."
-echo "Downloading ${VALIDATION_TARBALL} to ${OUTPUT_PATH}."
-wget -nd -c "${BASE_URL}/${VALIDATION_TARBALL}"
-tar xf "${VALIDATION_TARBALL}" -C "${OUTPUT_PATH}"
+#VALIDATION_TARBALL="${OUTDIR}validation/ILSVRC2012_img_val.tar"
+#OUTPUT_PATH="${OUTDIR}validation/"
+#mkdir -p "${OUTPUT_PATH}"
+#cd "${OUTDIR}/.."
+#echo "Downloading ${VALIDATION_TARBALL} to ${OUTPUT_PATH}."
+#wget -nd -c "${BASE_URL}/${VALIDATION_TARBALL}"
+#tar xf "${VALIDATION_TARBALL}" -C "${OUTPUT_PATH}"
 
+#exit 0
 # Download all images from the ImageNet 2012 train dataset.
 TRAIN_TARBALL="ILSVRC2012_img_train.tar"
 OUTPUT_PATH="${OUTDIR}train/"

@@ -78,7 +78,7 @@ from __future__ import print_function
 
 import os
 import tensorflow.compat.v1 as tf
-from datasets import download_and_convert_visualwakewords_lib
+import download_and_convert_visualwakewords_lib
 
 tf.logging.set_verbosity(tf.logging.INFO)
 
@@ -87,6 +87,19 @@ tf.app.flags.DEFINE_string(
     'A subdirectory in visualwakewords dataset directory'
     'containing the coco dataset')
 
+tf.app.flags.DEFINE_string(
+    'dataset_name', 'visualwakewords',
+    'A subdirectory in visualwakewords dataset directory'
+    'containing the coco dataset')
+
+tf.app.flags.DEFINE_string(
+    'dataset_dir', 'data/',
+    'A subdirectory in visualwakewords dataset directory'
+    'containing the coco dataset')
+tf.app.flags.DEFINE_string(
+    'foreground_class_of_interest', 'person',
+    'A subdirectory in visualwakewords dataset directory'
+    'containing the coco dataset')
 FLAGS = tf.app.flags.FLAGS
 
 
@@ -156,3 +169,5 @@ def run(dataset_dir, small_object_area_threshold, foreground_class_of_interest):
       val_image_dir,
       val_output_path,
       num_shards=10)
+
+run(FLAGS.dataset_dir, 0.005, FLAGS.foreground_class_of_interest)

@@ -50,7 +50,7 @@ from __future__ import print_function
 
 import os
 import sys
-
+sys.path.append('/home/ms75986/Desktop/Cadence/bin_quant/MobileNet/models/research/slim/venv-test-tf114/lib/python3.6/site-packages')
 from six.moves import xrange  # pylint: disable=redefined-builtin
 
 

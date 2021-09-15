@@ -28,6 +28,13 @@ from deployment import model_deploy
 from nets import nets_factory
 from preprocessing import preprocessing_factory
 
+from tensorflow.compat.v1 import ConfigProto
+from tensorflow.compat.v1 import InteractiveSession
+
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = "0"
+
+
 tf.app.flags.DEFINE_string(
     'master', '', 'The address of the TensorFlow master to use.')
 
@@ -410,6 +417,17 @@ def _get_variables_to_train():
 
 
 def main(_):
+
+  #'''
+  from tensorflow.compat.v1 import ConfigProto
+  from tensorflow.compat.v1 import InteractiveSession
+  config = ConfigProto()
+  config.gpu_options.allow_growth = True
+  session = InteractiveSession(config=config) 
+  print("***********************************")
+  sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
+  #'''
+  
   if not FLAGS.dataset_dir:
     raise ValueError('You must supply the dataset directory with --dataset_dir')
 
@@ -568,6 +586,8 @@ def main(_):
         var_list=variables_to_train)
     # Add total_loss to summary.
     summaries.add(tf.summary.scalar('total_loss', total_loss))
+    #import pdb
+    #pdb.set_trace()
 
     # Create gradient updates.
     grad_updates = optimizer.apply_gradients(clones_gradients,
@@ -577,6 +597,7 @@ def main(_):
     update_op = tf.group(*update_ops)
     with tf.control_dependencies([update_op]):
       train_tensor = tf.identity(total_loss, name='train_op')
+      #train_tensor = tf.identity(grad_updates, name='train_op')
 
     # Add the summaries from the first clone. These contain the summaries
     # created by model_fn and either optimize_clones() or _gather_clone_loss().
@@ -589,7 +610,7 @@ def main(_):
     ###########################
     # Kicks off the training. #
     ###########################
-    slim.learning.train(
+    slim.learning.train(optimizer,clones_gradients,
         train_tensor,
         logdir=FLAGS.train_dir,
         master=FLAGS.master,

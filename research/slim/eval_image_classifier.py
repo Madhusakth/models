@@ -90,6 +90,13 @@ FLAGS = tf.app.flags.FLAGS
 
 
 def main(_):
+
+  from tensorflow.compat.v1 import ConfigProto
+  from tensorflow.compat.v1 import InteractiveSession
+  config = ConfigProto()
+  config.gpu_options.allow_growth = True
+  session = InteractiveSession(config=config)
+
   if not FLAGS.dataset_dir:
     raise ValueError('You must supply the dataset directory with --dataset_dir')
 
